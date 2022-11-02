@@ -58,7 +58,6 @@ const ChatFooter = () => {
                     setSubmitting(false);
                     setValues({ message: get_random_message()})
                 }, 500);
-
             }}
         >
         {formik => (
@@ -77,6 +76,7 @@ const ChatFooter = () => {
                 <Form.Control
                     id="message"
                     type="text"
+                    autoFocus
                     {...formik.getFieldProps('message')}
                 />
                 <Button

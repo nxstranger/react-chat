@@ -31,13 +31,13 @@ const LoginForm = () => {
     const onSubmitHandler = async (values:any) => {
         console.log(values);
 
-        let fd = new FormData();
-        fd.append('username', values.username)
-        fd.append('password', values.password)
+        let formData = new FormData();
+        formData.append('username', values.username)
+        formData.append('password', values.password)
         const { username } = values;
         const resp = await axios.post(
             '/api/v1/auth/login',
-            fd,
+            formData,
             // JSON.stringify(values),
             { timeout: 2000, },
         );
@@ -61,6 +61,7 @@ const LoginForm = () => {
                 <Form.Group className="mb-3">
                     <Form.Label>Username</Form.Label>
                     <Form.Control
+                        autoFocus
                         id='username'
                         {...formik.getFieldProps('username')}
                         aria-describedby="usernameHelpBlock"

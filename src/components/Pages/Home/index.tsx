@@ -29,7 +29,7 @@ const Home = () => {
         <LoginWrapper>
         <Card style={{
             maxWidth: '800px',
-            minWidth: '500px'
+            minWidth: '320px'
         }}>
             <Card.Header>
                 <Card.Title style={{textAlign: 'center'}}>

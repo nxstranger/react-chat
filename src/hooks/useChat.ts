@@ -58,7 +58,7 @@ const useChat = () => {
     const connectToSocket = (userToken: string) => {
         console.log('\n\n');
         console.log('connection props, token - ', userToken);
-        const path = `${env.wsHost}/?user=${userToken}`;
+        const path = `${env.wsHost}/?token=${userToken}`;
         const ws = new WebSocket(path);
         ws.onopen = sockOnOpen;
         ws.onclose = sockOnClose(userToken);

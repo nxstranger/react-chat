@@ -40,6 +40,7 @@ const ChangeContactForm = () => {
                     <Form.Group className="mb-3">
                         <Form.Label htmlFor="contactName">Contact ID</Form.Label>
                         <Form.Control
+                            autoFocus
                             id="contactName"
                             type="text"
                             {...formik.getFieldProps('contactName')}
