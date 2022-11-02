@@ -10,6 +10,7 @@ import styled from "styled-components";
 const Wrapper = styled.div`
   margin: 0 auto;
   height: 100vh;
+  min-width: 320px;
   background: white;
   display: flex;
   flex-direction: column;
@@ -34,7 +35,7 @@ const ContactPage = () => {
             <Wrapper>
                 <Card style={{
                     maxWidth: '800px',
-                    minWidth: '420'
+                    minWidth: '320px'
                 }}>
                     <Card.Header>
                         {'Setup contact'}

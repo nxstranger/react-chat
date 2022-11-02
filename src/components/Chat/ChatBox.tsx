@@ -11,7 +11,7 @@ const ChatBox = () => {
         console.log('init chatbox');
     }, []);
     return (
-        <div className="mt-5 mb-5 pt-5">
+        <div className="mt-5 mb-5 pb-2">
             {
                 (messages.length)
                     ? messages.map((msg, index) => (

@@ -1,18 +1,26 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
-import {ChatStoreInterface, MessageInterface} from "../interfaces/chatInterfaces";
-import {AddMessageActionInterface, LocalStorageChatInterface} from "../interfaces/chatSliceInterfaces";
+import {
+    ChatStoreInterface,
+    MessageInterface
+} from "../interfaces/chatInterfaces";
+import {
+    AddMessageActionInterface,
+    LocalStorageChatInterface,
+    UpdateMessageStatusActionInterface,
+} from "../interfaces/chatSliceInterfaces";
 import {userApi} from '../modules/Axios';
 
 const fakeMessages:MessageInterface[] = [
     {
         type: 'PT',
         message: "Hey baby. I didn't hear you downstairs.",
-        stamp: (+new Date() - 10000)
+        stamp: (+new Date() - 10000),
     },
     {
         type: 'MY',
         message: "I went down to the sports bar. Put a little money on the game.",
-        stamp: (+new Date() - 5000)
+        stamp: (+new Date() - 5000),
+        status: "READ"
     },
     {
         type: 'PT',
@@ -22,7 +30,14 @@ const fakeMessages:MessageInterface[] = [
     {
         type: 'MY',
         message: 'I got "Lucky".',
-        stamp: (+new Date() - 3000)
+        stamp: (+new Date() - 3000),
+        status: "DELIVERED",
+    },
+    {
+        type: 'MY',
+        message: 'What is for dinner?',
+        stamp: (+new Date() - 3000),
+        status: "SENT",
     },
 ]
 
@@ -89,6 +104,13 @@ const chatSlice = createSlice({
         addMessage: (state, action:AddMessageActionInterface) => {
             const {type, message, stamp, extra} = action.payload;
             state.messages.push({type, stamp, message, extra})
+        },
+        updateMessageStatus: (state, {payload}: UpdateMessageStatusActionInterface) => {
+            state.messages.forEach((msg) => {
+                if (msg.type == 'MY' && msg.stamp == payload.stamp) {
+                    msg.status = payload.newStatus;
+                }
+            })
         },
         setToken:  (state, action) => {
             state.token = action.payload;

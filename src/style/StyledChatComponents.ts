@@ -4,7 +4,7 @@ import {colorScheme} from "../modules/conf";
 const ChatBodyDiv = styled.div`
   width: 100%;
   min-height: 100vh;
-  min-width: 540px;
+  min-width: 320px;
   margin: 0 2px;
   height: auto;
   display: flex;
@@ -22,7 +22,7 @@ const MessageLineDiv = styled.div`
 const InputFormWrapper = styled.div`
   width: 100%;
   max-width: 1000px;
-  min-width: 540px;
+  min-width: 320px;
   display: flex;
   flex-direction: row;
   position: fixed;

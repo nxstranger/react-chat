@@ -6,7 +6,7 @@ import MessageStatusBox from "./MessageStatus";
 import {colorScheme} from "../../modules/conf";
 
 const MessageContainer = (props:MessageInterface) => {
-    const {stamp, message, type} = props;
+    const {stamp, message, type, status} = props;
     return (
         <MessageLineDiv style={{
             width: "100%",
@@ -47,7 +47,7 @@ const MessageContainer = (props:MessageInterface) => {
                 }}>
                     <Card.Subtitle>{type == "MY" ? "You": "Contact"}</Card.Subtitle>
                     {type == "MY"
-                        ? <MessageStatusBox sent={true} read={false}/>
+                        ? <MessageStatusBox status={status || 'UNDEFINED'} />
                         : ""
                     }
                     <Card.Subtitle>{new Date(stamp).toLocaleTimeString('ru-RU')}</Card.Subtitle>

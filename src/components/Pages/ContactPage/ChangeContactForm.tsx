@@ -5,19 +5,20 @@ import {asyncSetContactName} from '../../../store/chatSlice'
 import {useAppDispatch, useAppSelector} from "../../../hooks/storeHooks";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import useLocalStorage from "../../../hooks/useLocalStorage";
 
 const ChangeContactForm = () => {
     const contactName = useAppSelector(({chat}) => chat.contactName);
-    const userName = useAppSelector(({chat}) => chat.userName);
     const token = useAppSelector(({chat}) => chat.token);
     const dispatch = useAppDispatch();
+    const {getContactLocal, setContactLocal} = useLocalStorage();
 
     useEffect( () => {
         console.log('ChangeContactForm init');
     }, [contactName]);
     return (
         <Formik
-            initialValues={{contactName: (userName == 'qwe4') ? 'qwe8': 'qwe4'}}
+            initialValues={{contactName: getContactLocal()}}
             validationSchema={Yup.object({
                 contactName: Yup.string()
                     .min(1, 'Must include characters')
@@ -25,13 +26,14 @@ const ChangeContactForm = () => {
             })}
             onSubmit={(values, { setSubmitting, setValues }) => {
                 setTimeout(() => {
-                    const newName = values.contactName;
-                    console.log(JSON.stringify(values, null, 2));
-                    if (newName && token) {
-                        dispatch(asyncSetContactName({token, contactName: newName}));
+                    const contactName = values.contactName;
+                    // console.log(JSON.stringify(values, null, 2));
+                    if (contactName && token) {
+                        setContactLocal(contactName)
+                        dispatch(asyncSetContactName({token, contactName}));
                     }
                     setSubmitting(false);
-                    setValues({ contactName: newName });
+                    setValues({ contactName });
                 }, 500);
             }}
         >
@@ -51,7 +53,7 @@ const ChangeContactForm = () => {
                     </Form.Group>
                     <Button
                         type="submit"
-                        hidden
+                        // hidden
                         disabled={ formik.isSubmitting || !formik.isValid }
                     >
                         {'Change ID'}

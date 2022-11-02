@@ -1,6 +1,7 @@
 // const HOST = '192.168.0.159:8000';
 // const HOST = '192.168.1.41:8000';
-const HOST = 'localhost:8000';
+// const HOST = 'localhost:8000';
+const HOST = '192.168.1.71:8000';
 
 export default {
     hostname: `http://${HOST}`,

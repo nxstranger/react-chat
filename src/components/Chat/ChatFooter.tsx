@@ -81,7 +81,7 @@ const ChatFooter = () => {
                 />
                 <Button
                     type="submit"
-                    hidden
+                    // hidden
                     disabled={ formik.isSubmitting || !formik.isValid }
                 >Send</Button>
                 </Stack>

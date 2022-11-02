@@ -1,10 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-
+import { MessageStatusEnum } from '../../interfaces/chatInterfaces';
 
 interface messageStatusInterface {
-    sent: boolean;
-    read: boolean;
+    status: MessageStatusEnum,
 }
 
 const StyledMessageStatusBox = styled.div`
@@ -28,12 +27,12 @@ const StyledStatusDiv = styled.div`
 
 
 const MessageStatusBox = (props:messageStatusInterface) => {
-    const {sent, read} = props;
+    const {status} = props;
 
     return (
         <StyledMessageStatusBox>
-            <StyledStatusDiv status={sent}/>
-            <StyledStatusDiv status={read}/>
+            <StyledStatusDiv status={["DELIVERED", "READ"].includes(status)}/>
+            <StyledStatusDiv status={status=="READ"}/>
         </StyledMessageStatusBox>
     )
 }

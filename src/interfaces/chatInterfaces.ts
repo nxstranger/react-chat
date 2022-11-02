@@ -1,9 +1,12 @@
 type SendMessageType = 'MSG' | 'INFO' | 'ERR'
 
+type MessageStatusEnum = 'SENT'|'DELIVERED'|'READ'|'UNDEFINED'
+
 interface MessageInterface {
     type: 'MY'|'PT'| 'INFO'| 'ERR';
     message: string;
     stamp: number;
+    status?: MessageStatusEnum,
     extra?: any,
 }
 
@@ -28,4 +31,5 @@ export type {
     MessageInterface,
     ChatStoreInterface,
     SendMessageType,
+    MessageStatusEnum,
 }

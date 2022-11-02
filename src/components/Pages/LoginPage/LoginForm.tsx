@@ -7,23 +7,27 @@ import {setToken, setUser} from '../../../store/chatSlice';
 import {PagesEnum} from "../../../enums/pagesEnum";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import useLocalStorage from "../../../hooks/useLocalStorage";
 
 interface errorFields {
     username: string;
     password: string
 }
 
-const initialInputValues = {
-    username: 'qwe1',
-    password: 'qwe'
-};
 
 const LoginForm = () => {
+    const {getUserLocal, setUserLocal} = useLocalStorage();
+
+
     const validate = (values: errorFields) => {
         const errors:any = {};
         if (!values.username) errors.username = 'Required!';
         if (!values.password) errors.password = 'Required!';
         return errors;
+    };
+    const initialInputValues = {
+        username: getUserLocal(),
+        password: 'qwe'
     };
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
@@ -38,11 +42,10 @@ const LoginForm = () => {
         const resp = await axios.post(
             '/api/v1/auth/login',
             formData,
-            // JSON.stringify(values),
             { timeout: 2000, },
         );
         if ((resp.status) != 200) return alert('Invalid credentials');
-
+        setUserLocal(values.username);
         const { access_token, token_type} = resp.data;
         let access = token_type + " " + access_token;
         console.log(access_token, );
@@ -85,7 +88,7 @@ const LoginForm = () => {
 
                 <Button
                     type="submit"
-                    hidden
+                    // hidden
                     disabled={formik.isSubmitting || !formik.isValid}
                 >
                     {'Login'}

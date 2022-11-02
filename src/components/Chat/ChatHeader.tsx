@@ -9,7 +9,7 @@ import {colorScheme} from "../../modules/conf";
 const ChatHeaderDiv = styled.div`
   width: 100%;
   max-width: 1000px;
-  min-width: 540px;
+  min-width: 320px;
   display: flex;
   flex-direction: row;
   position: fixed;

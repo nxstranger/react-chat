@@ -103,10 +103,10 @@ const useChat = () => {
             };
             try {
                 socket.current.send(JSON.stringify(message));
+                dispatch(addMessage({type: "MY", message: message.message, stamp: message.stamp, status: "SENT"}))
             } catch (err) {
                 console.log(err);
             }
-            dispatch(addMessage({type: "MY", message: message.message, stamp: message.stamp}))
         }
     }, [token, contactName]);
     return { sendMessage }
