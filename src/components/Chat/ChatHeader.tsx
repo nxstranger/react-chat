@@ -4,6 +4,7 @@ import {useAppDispatch, useAppSelector} from "../../hooks/storeHooks";
 import {unAuthorizeUser} from "../../store/chatSlice";
 import {StyledButton} from "../../style/StyledChatComponents";
 import {colorScheme} from "../../modules/conf";
+import useChat from "../../hooks/useChat";
 
 
 const ChatHeaderDiv = styled.div`
@@ -37,9 +38,11 @@ const InfoWrapper = styled.div`
 const ChatHeader = () => {
     const {userName, contactName} = useAppSelector(({ chat }) => chat);
     const dispatch = useAppDispatch();
+    const { closeWebsocketConnection } = useChat();
     const logoutAction = ({currentTarget}: SyntheticEvent<HTMLButtonElement>) => {
         currentTarget.disabled = true;
         dispatch(unAuthorizeUser());
+        closeWebsocketConnection();
         console.log('LogOut');
     }
     return (

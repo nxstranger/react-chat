@@ -5,6 +5,7 @@ import useChat from '../../hooks/useChat';
 import {useAppDispatch, useAppSelector} from "../../hooks/storeHooks";
 import {addMessage} from "../../store/chatSlice";
 import {Form, Button, Stack} from "react-bootstrap";
+import useScroll from "../../hooks/useScroll";
 
 
 const get_random_message = () => {
@@ -29,12 +30,7 @@ const ChatFooter = () => {
     useEffect( () => {
         console.log('MsgForm init, user: ' + userName);
     }, []);
-    const scrollToBottom = () => {
-        setTimeout(
-            () => scrollTo(0, document.body.scrollHeight),
-            100
-        );
-    };
+    const { scrollBodyToBottom } = useScroll();
 
     return (
         <Formik
@@ -54,7 +50,7 @@ const ChatFooter = () => {
                         if (error instanceof Error) message = error.message;
                         dispatch(addMessage({type: "ERR", message: message, stamp: +new Date()}));
                     }
-                    scrollToBottom();
+                    scrollBodyToBottom(100);
                     setSubmitting(false);
                     setValues({ message: get_random_message()})
                 }, 500);

@@ -4,6 +4,7 @@ import {addMessage, unAuthorizeUser} from "../store/chatSlice";
 import { useAppDispatch, useAppSelector } from "./storeHooks";
 import {SendMessageType} from "../interfaces/chatInterfaces";
 import {useNavigate} from "react-router-dom";
+import useScroll from "./useScroll";
 import { PagesEnum } from "../enums/pagesEnum";
 
 const useChat = () => {
@@ -14,6 +15,7 @@ const useChat = () => {
     const token = useAppSelector(({chat}) => chat.token);
     const contactName = useAppSelector(({chat}) => chat.contactName);
     const navigate = useNavigate();
+    const {scrollBodyToBottom} = useScroll();
 
     const sockOnOpen = () => {
         console.log('connected');
@@ -31,6 +33,15 @@ const useChat = () => {
         }
     };
 
+
+    const dontReconnect = () => {
+        clearTimeout(reconnectTimeout.current);
+        console.log('Deauthorize user');
+        dispatch(unAuthorizeUser());
+        navigate(PagesEnum.IndexPage);
+        return;
+    }
+
     const sockOnClose = (userToken: string) => ({code, type}: CloseEvent) => {
         console.log('sockOnClose / isConnected', isConnected);
         console.log(`disconnected code:${code}, ${type}`);
@@ -43,17 +54,42 @@ const useChat = () => {
             setIsConnected(false);
         }
         if ([1000, 3008, 3009, 3500].includes(code)) {
-            clearTimeout(reconnectTimeout.current);
-            console.log('Deauthorize user');
-            dispatch(unAuthorizeUser());
-            navigate(PagesEnum.IndexPage);
-            return;
+            return dontReconnect();
+        } else {
+            reconnectTimeout.current = setTimeout(() => {
+                if (!isConnected) connectToSocket(userToken);
+            }, 3000);
         }
-        reconnectTimeout.current = setTimeout(() => {
-            if (!isConnected) connectToSocket(userToken);
-        }, 3000);
         socket.current = null;
     };
+
+    const closeWebsocketConnection = () => {
+        try {
+            socket.current?.close(1000);
+            // dontReconnect();
+        } catch (closeWsErr) {
+            console.log('closeWebsocketConnection error: ', closeWsErr);
+        }
+    }
+
+
+    const sockOnMessage = (msg: MessageEvent) => {
+        console.log('onmessage', msg);
+        console.log('json parse', JSON.parse(msg.data));
+        const {stamp, message, type} = JSON.parse(msg.data);
+        console.log('onmessage type:', type);
+        switch (type) {
+            case 'MSG':
+                dispatch(addMessage({type:'PT', stamp, message}));
+                break;
+            case 'INFO':
+                dispatch(addMessage({type:'INFO', stamp, message}));
+                break;
+            default:
+                dispatch(addMessage({type:'ERR', stamp, message}));
+        }
+        scrollBodyToBottom(100);
+    }
 
     const connectToSocket = (userToken: string) => {
         console.log('\n\n');
@@ -62,22 +98,7 @@ const useChat = () => {
         const ws = new WebSocket(path);
         ws.onopen = sockOnOpen;
         ws.onclose = sockOnClose(userToken);
-        ws.onmessage = (msg) => {
-            console.log('onmessage', msg);
-            console.log('json parse', JSON.parse(msg.data));
-            const {stamp, message, type} = JSON.parse(msg.data);
-            console.log('onmessage type:', type);
-            switch (type) {
-                case 'MSG':
-                    dispatch(addMessage({type:'PT', stamp, message}));
-                    break;
-                case 'INFO':
-                    dispatch(addMessage({type:'INFO', stamp, message}));
-                    break;
-                default:
-                    dispatch(addMessage({type:'ERR', stamp, message}));
-            }
-        }
+        ws.onmessage = sockOnMessage;
         socket.current = ws;
     }
 
@@ -109,7 +130,7 @@ const useChat = () => {
             }
         }
     }, [token, contactName]);
-    return { sendMessage }
+    return { sendMessage, closeWebsocketConnection }
 };
 
 export default useChat;

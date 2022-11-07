@@ -4,9 +4,22 @@ import {MessageLineDiv} from '../../style/StyledChatComponents';
 import Card from "react-bootstrap/Card";
 import MessageStatusBox from "./MessageStatus";
 import {colorScheme} from "../../modules/conf";
+import {useAppSelector} from "../../hooks/storeHooks";
 
 const MessageContainer = (props:MessageInterface) => {
     const {stamp, message, type, status} = props;
+
+    const username = useAppSelector(({chat}) => chat.userName);
+    const contactName = useAppSelector(({chat}) => chat.contactName);
+
+
+    const getProfileImage = (name: string | null) => {
+        if (name) return "/profiles-logo/" + name + '.png';
+        return '/profiles-logo/default-logo.png'
+    }
+
+
+
     return (
         <MessageLineDiv style={{
             width: "100%",
@@ -20,7 +33,7 @@ const MessageContainer = (props:MessageInterface) => {
                 margin: "0 auto"
             }}>
                 <img
-                    src={type == "MY" ? '/user-logo.png': "/contact-logo.jpeg"}
+                    src={type == "MY" ? getProfileImage(username): getProfileImage(contactName)}
                     style={{
                         width:"100%",
                         maxWidth: "75px",

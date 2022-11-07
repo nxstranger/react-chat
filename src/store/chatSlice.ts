@@ -117,9 +117,9 @@ const chatSlice = createSlice({
             // updateLocalStorageData({contactName: 8});
         },
         unAuthorizeUser: (state) => {
-            state.token = '';
+            state.token = "";
             state.messages = [];
-            state.contactName = '';
+            state.contactName = "";
             state.userName = "";
         },
         setUser: (state, { payload }) => {
