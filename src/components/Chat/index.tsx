@@ -8,7 +8,7 @@ import ChatHeader from "./ChatHeader";
 
 const ChatBody = () => {
     useEffect(() => {
-        console.log('Chat index init');
+        // console.log('Chat index init');
     }, [])
     return (
         <ChatBodyDiv>

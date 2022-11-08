@@ -5,7 +5,7 @@ import ProtectedRoute from "../../ProtectedRoute/index";
 const Main : React.FC = () => {
 
     useEffect(() => {
-        console.log('Main init');
+        // console.log('Main init');
     }, []);
     return (
         <ProtectedRoute>

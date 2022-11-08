@@ -27,7 +27,7 @@ const ChatFooter = () => {
     const { sendMessage } = useChat();
     const dispatch = useAppDispatch();
     useEffect( () => {
-        console.log('Init chat footer');
+        // console.log('Init chat footer');
     }, []);
     const { scrollBodyToBottom } = useScroll();
 

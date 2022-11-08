@@ -6,7 +6,7 @@ import Message from "./MessageLine";
 const ChatBox = () => {
     const messages = useAppSelector(state => state.chat.messages);
     useEffect( () => {
-        console.log('init chatbox');
+        // console.log('init chatbox');
     }, []);
     return (
         <div className="mt-5 mb-5 pb-2">
