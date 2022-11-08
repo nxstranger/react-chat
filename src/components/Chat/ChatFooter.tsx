@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import * as Yup from 'yup';
 import {Formik} from "formik";
 import useChat from '../../hooks/useChat';
-import {useAppDispatch, useAppSelector} from "../../hooks/storeHooks";
+import {useAppDispatch} from "../../hooks/storeHooks";
 import {addMessage} from "../../store/chatSlice";
 import {Form, Button, Stack} from "react-bootstrap";
 import useScroll from "../../hooks/useScroll";
@@ -24,11 +24,10 @@ const get_random_message = () => {
 
 
 const ChatFooter = () => {
-    const {userName} = useAppSelector(({ chat }) => chat);
     const { sendMessage } = useChat();
     const dispatch = useAppDispatch();
     useEffect( () => {
-        console.log('MsgForm init, user: ' + userName);
+        console.log('Init chat footer');
     }, []);
     const { scrollBodyToBottom } = useScroll();
 

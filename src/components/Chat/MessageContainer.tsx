@@ -66,8 +66,6 @@ const MessageContainer = (props:MessageInterface) => {
                     <Card.Subtitle>{new Date(stamp).toLocaleTimeString('ru-RU')}</Card.Subtitle>
                 </Card.Header>
                 <Card.Footer
-                    // className='pb-0 bt-0 mt-0 mb-0'
-
                 >
                     {message}
                 </Card.Footer>

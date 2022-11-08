@@ -27,7 +27,6 @@ const ChangeContactForm = () => {
             onSubmit={(values, { setSubmitting, setValues }) => {
                 setTimeout(() => {
                     const contactName = values.contactName;
-                    // console.log(JSON.stringify(values, null, 2));
                     if (contactName && token) {
                         setContactLocal(contactName)
                         dispatch(asyncSetContactName({token, contactName}));

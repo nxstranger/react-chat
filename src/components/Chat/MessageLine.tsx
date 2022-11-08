@@ -5,8 +5,6 @@ import {
     ErrorMessageP,
 } from "../../style/StyledChatComponents";
 import {MessageInterface} from "../../interfaces/chatInterfaces";
-// import MyMessage from './MyMessage';
-// import PartnerMessage from './PartnerMessage';
 import MessageContainer from "./MessageContainer";
 
 const Message = (props: MessageInterface) => {

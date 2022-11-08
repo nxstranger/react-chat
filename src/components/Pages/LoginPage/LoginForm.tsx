@@ -40,8 +40,8 @@ const LoginForm = () => {
     const onSubmitHandler = async (values:any) => {
         console.log(values);
         let formData = new FormData();
-        formData.append('username', values.username)
-        formData.append('password', values.password)
+        formData.append('username', values.username);
+        formData.append('password', values.password);
         const { username } = values;
         try {
             const resp = await axios.post(
@@ -53,7 +53,6 @@ const LoginForm = () => {
             setUserLocal(values.username);
             const { access_token, token_type} = resp.data;
             let access = token_type + " " + access_token;
-            console.log(access_token, );
             dispatch(setToken(access));
             dispatch(setUser(username));
             if (access) navigate(PagesEnum.ContactPage);
@@ -64,7 +63,7 @@ const LoginForm = () => {
         }
 
     }
-    useEffect(() => {console.log('LoginForm rerendered')}, [])
+    useEffect(() => {console.log('LoginForm rerendered')}, []);
     return <Formik
         initialValues={initialInputValues}
         validate={validate}

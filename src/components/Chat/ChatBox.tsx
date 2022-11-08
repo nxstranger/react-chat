@@ -1,8 +1,6 @@
 import React, { useEffect} from 'react';
-// import { ChatBoxDiv } from "../../style/StyledChatComponents";
 import { useAppSelector } from '../../hooks/storeHooks';
 import Message from "./MessageLine";
-// import {CardGroup} from "react-bootstrap";
 
 
 const ChatBox = () => {
