@@ -11,6 +11,7 @@
     "@types/react": "^18.0.18",
     "axios": "^0.27.2",
     "bootstrap": "^5.2.2",
+    "crypto-browserify": "^3.12.0",
     "formik": "^2.2.9",
     "react": "^18.2.0",
     "react-bootstrap": "^2.5.0",
@@ -21,6 +22,10 @@
     "styled-components": "^5.3.5",
     "typescript": "^4.8.2",
     "yup": "^0.32.11"
+  },
+  "engines" : {
+    "npm" : "7.20.3",
+    "node" : "16.10.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -33,6 +38,9 @@
       "react-app",
       "react-app/jest"
     ]
+  },
+  "browser": {
+    "crypto": "crypto-browserify"
   },
   "browserslist": {
     "production": [
